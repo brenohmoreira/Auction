@@ -1,0 +1,12 @@
+import { IsEmail, IsNotEmpty, IsString, MaxLength } from "class-validator";
+
+export class LoginDTO {
+        @IsEmail() 
+        @MaxLength(254)
+        email: string;
+        
+        @IsString()
+        @IsNotEmpty()
+        @MaxLength(128)
+        senha: string;
+}

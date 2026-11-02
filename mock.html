@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark" data-palette="burle-marx">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* Fontes locais da pasta "Fontes Martelo" (funciona sem internet). */
+@font-face{font-family:"Big Shoulders Display";src:url("Fontes%20Martelo/Big%20Shoulders%20Display/BigShouldersDisplay-Variavel.ttf") format("truetype");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Schibsted Grotesk";src:url("Fontes%20Martelo/Schibsted%20Grotesk/SchibstedGrotesk-Variavel.ttf") format("truetype");font-weight:400 900;font-style:normal;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("Fontes%20Martelo/IBM%20Plex%20Mono/IBMPlexMono-Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("Fontes%20Martelo/IBM%20Plex%20Mono/IBMPlexMono-Medium.ttf") format("truetype");font-weight:500;font-display:swap}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>Martelo Leilões</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: Swiss 12-column grid. Left = the object as a poster panel; right = the price as the headline. Sequence of lots below as a true timeline. */
+:root{
+  --paper:#ECEDE8; --paper-2:#E1E3DC; --ink:#15171D; --ink-2:#4A4E57; --rule:#C6C9C1;
+  --cobalt:#2340E0; --cobalt-ink:#F3F4EF; --sun:#F2C230; --red:#D2402A; --green:#1E8A4C;
+  --display:"Big Shoulders Display", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body:"Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#111318; --paper-2:#1A1D24; --ink:#E9EAE4; --ink-2:#9EA2AB; --rule:#2C3039;
+  --cobalt:#3552F0; --cobalt-ink:#F3F4EF; --sun:#F2C230; --red:#F06A52; --green:#45C07A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#111318; --paper-2:#1A1D24; --ink:#E9EAE4; --ink-2:#9EA2AB; --rule:#2C3039;
+  --cobalt:#3552F0; --cobalt-ink:#F3F4EF; --sun:#F2C230; --red:#F06A52; --green:#45C07A; color-scheme:dark}
+
+/* Palettes: each swaps the poster/action color (--cobalt) and the highlight (--sun). */
+:root{--art-ink:#15171D;--art-paper:#ECEDE8}
+:root[data-palette="burle-marx"]{--cobalt:#1D6646;--sun:#F5A3B5}
+:root[data-palette="ameixa"]{--cobalt:#5B2C6F;--sun:#CDE25B}
+:root[data-palette="bauhaus"]{--cobalt:#C8411A;--sun:#A8C5FF}
+:root[data-palette="grafite"]{--cobalt:#23262E;--sun:#FF7A1A;--art-ink:#5C6270}
+:root[data-palette="marinho"]{--cobalt:#14284B;--sun:#FF8A65}
+:root[data-palette="oliva"]{--cobalt:#4F5A1E;--sun:#F2D16B}
+:root[data-palette="athos"]{--cobalt:#1546A0;--sun:#7FC8E8}
+:root[data-palette="ceu"]{--cobalt:#CFE0F0;--cobalt-ink:#15171D;--sun:#FFB547;--art-ink:#1546A0;--art-paper:#FFFFFF}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"])[data-palette="burle-marx"]{--cobalt:#22805A}
+  :root:not([data-theme="light"])[data-palette="ameixa"]{--cobalt:#76408E}
+  :root:not([data-theme="light"])[data-palette="bauhaus"]{--cobalt:#D9521F}
+  :root:not([data-theme="light"])[data-palette="grafite"]{--cobalt:#343946}
+  :root:not([data-theme="light"])[data-palette="marinho"]{--cobalt:#1F3A6B}
+  :root:not([data-theme="light"])[data-palette="oliva"]{--cobalt:#65732A}
+  :root:not([data-theme="light"])[data-palette="athos"]{--cobalt:#2A5DB8}
+  :root:not([data-theme="light"])[data-palette="ceu"]{--cobalt:#A9C4DE}
+}
+:root[data-theme="dark"][data-palette="burle-marx"]{--cobalt:#22805A}
+:root[data-theme="dark"][data-palette="ameixa"]{--cobalt:#76408E}
+:root[data-theme="dark"][data-palette="bauhaus"]{--cobalt:#D9521F}
+:root[data-theme="dark"][data-palette="grafite"]{--cobalt:#343946}
+:root[data-theme="dark"][data-palette="marinho"]{--cobalt:#1F3A6B}
+:root[data-theme="dark"][data-palette="oliva"]{--cobalt:#65732A}
+:root[data-theme="dark"][data-palette="athos"]{--cobalt:#2A5DB8}
+:root[data-theme="dark"][data-palette="ceu"]{--cobalt:#A9C4DE}
+
+*{box-sizing:border-box}
+.palettes{border-bottom:1px solid var(--rule);background:var(--paper-2)}
+.palettes .wrap{display:flex;gap:6px 14px;align-items:center;flex-wrap:wrap;padding-block:8px}
+.sw{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1.5px solid transparent;padding:4px 10px 4px 4px;font-size:13px;font-weight:500}
+.sw i{width:22px;height:22px;border-radius:50%;background:linear-gradient(90deg,var(--a) 50%,var(--b) 50%)}
+.sw:hover{border-color:var(--rule)}
+.sw[aria-current="true"]{border-color:var(--ink)}
+.modes{margin-left:auto;display:inline-flex;border:1.5px solid var(--ink)}
+.modes button{background:transparent;border:0;padding:5px 10px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+.modes button + button{border-left:1.5px solid var(--ink)}
+.modes button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1320px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.02em}
+.label{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+
+/* Top bar */
+header.bar{border-bottom:2px solid var(--ink)}
+header.bar .wrap{display:flex;align-items:center;gap:24px;padding-block:14px;flex-wrap:wrap}
+.logo{font-family:var(--display);font-weight:900;font-size:30px;line-height:1;letter-spacing:.01em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.logo .mallet{width:22px;height:22px;background:var(--ink);border-radius:50%;position:relative}
+.logo .mallet::after{content:"";position:absolute;left:9px;top:16px;width:4px;height:14px;background:var(--ink);transform:rotate(-35deg);transform-origin:top}
+.session{display:flex;gap:20px;flex-wrap:wrap;align-items:center;flex:1}
+.live{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.1em;font-weight:500}
+.live i{width:9px;height:9px;border-radius:50%;background:var(--red);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.me{margin-left:auto;display:flex;align-items:center;gap:10px}
+.paddle{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--sun);color:#15171D;font-family:var(--display);font-weight:900;font-size:19px;position:relative}
+.paddle::after{content:"";position:absolute;bottom:-9px;left:50%;width:5px;height:11px;margin-left:-2.5px;background:var(--ink);border-radius:2px}
+
+/* Stage */
+.stage{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 28px;padding-block:28px 8px}
+.poster{grid-column:1 / span 7;background:var(--cobalt);color:var(--cobalt-ink);position:relative;min-height:560px;overflow:hidden;display:flex;flex-direction:column}
+.poster svg.art{position:absolute;inset:0;width:100%;height:100%}
+.poster .top{position:relative;display:flex;justify-content:space-between;padding:22px 24px;gap:16px}
+.poster .top .label{color:var(--cobalt-ink);opacity:.8}
+.poster .lotno{position:relative;margin-top:auto;padding:0 20px 6px;font-family:var(--display);font-weight:900;font-size:clamp(120px,19vw,260px);line-height:.78;letter-spacing:-.02em;color:transparent;-webkit-text-stroke:2px var(--cobalt-ink)}
+.poster .caption{position:relative;background:var(--ink);color:var(--paper);padding:16px 24px;display:grid;grid-template-columns:1fr auto;gap:4px 24px;align-items:end}
+.poster .caption h1{margin:0;font-family:var(--display);font-weight:800;font-size:clamp(28px,3.4vw,42px);line-height:1;text-transform:uppercase;text-wrap:balance}
+.poster .caption p{margin:0;color:var(--paper);opacity:.75}
+.poster .caption .mono{opacity:.75;text-align:right}
+
+.desk{grid-column:8 / span 5;display:flex;flex-direction:column;gap:22px;min-width:0}
+.call{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--rule);padding-bottom:12px}
+.chip{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.1em;padding:6px 10px;border:1.5px solid var(--ink);font-weight:500;white-space:nowrap}
+.chip.once{background:var(--sun);border-color:var(--sun);color:#15171D}
+.chip.twice{background:var(--red);border-color:var(--red);color:#fff}
+.chip.sold{background:var(--ink);color:var(--paper)}
+.price .label{display:flex;justify-content:space-between}
+.amount{font-family:var(--display);font-weight:900;font-size:clamp(76px,9.5vw,150px);line-height:.85;letter-spacing:-.01em;font-variant-numeric:tabular-nums;display:flex;align-items:flex-start;gap:6px;margin-top:6px;position:relative}
+.amount small{font-size:.28em;font-weight:800;margin-top:.35em}
+.amount.flash::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:8px;background:var(--sun);animation:wipe .7s ease-out forwards;transform-origin:left}
+@keyframes wipe{from{transform:scaleX(0)}60%{transform:scaleX(1);opacity:1}to{transform:scaleX(1);opacity:0}}
+.leader{display:flex;align-items:center;gap:10px;margin-top:12px;font-weight:500}
+.leader .dot{width:10px;height:10px;border-radius:50%;background:var(--ink-2)}
+.leader.you .dot{background:var(--green)}
+.leader.out .dot{background:var(--red)}
+.leader.out{color:var(--red)}
+.leader.you{color:var(--green)}
+
+/* Countdown track with the auctioneer's calls as ticks */
+.clock{display:grid;gap:8px}
+.clock .row{display:flex;justify-content:space-between;align-items:baseline}
+.secs{font-family:var(--display);font-weight:800;font-size:34px;line-height:1;font-variant-numeric:tabular-nums}
+.track{position:relative;height:14px;background:var(--paper-2);border:1.5px solid var(--ink)}
+.track .fill{position:absolute;inset:0 auto 0 0;background:var(--ink);transition:width 1s linear}
+.track .tick{position:absolute;top:-6px;bottom:-6px;width:2px;background:var(--red)}
+.ticks{position:relative;height:16px}
+.ticks span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+
+/* Bid controls */
+.bid{display:grid;gap:12px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid var(--ink)}
+.steps button{background:transparent;border:0;border-right:1.5px solid var(--ink);padding:10px 8px;text-align:left;display:grid;gap:2px}
+.steps button:last-child{border-right:0}
+.steps button b{font-family:var(--display);font-weight:800;font-size:22px;line-height:1;font-variant-numeric:tabular-nums}
+.steps button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.steps button[aria-pressed="true"] .label{color:var(--paper);opacity:.7}
+.hold{position:relative;overflow:hidden;border:0;background:var(--cobalt);color:var(--cobalt-ink);padding:20px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;user-select:none;-webkit-user-select:none;touch-action:none}
+.hold .meter{position:absolute;inset:0;background:var(--sun);transform:scaleX(0);transform-origin:left}
+.hold.charging .meter{transition:transform .9s linear;transform:scaleX(1)}
+.hold > span{position:relative;z-index:1}
+.hold .verb{font-family:var(--display);font-weight:900;font-size:30px;line-height:1;text-transform:uppercase}
+.hold.charging{color:#15171D}
+.hold:disabled{background:var(--paper-2);color:var(--ink-2);cursor:not-allowed}
+.hold .how{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;opacity:.85}
+.sum{display:grid;grid-template-columns:1fr auto;gap:2px 16px;font-variant-numeric:tabular-nums}
+.sum dt{color:var(--ink-2)}
+.sum dd{margin:0;text-align:right;font-family:var(--mono);font-size:13px}
+.sum .total{border-top:1px solid var(--rule);padding-top:6px;margin-top:4px;font-weight:700;color:var(--ink)}
+.sum dd.total{font-weight:500}
+.toast{min-height:22px;font-weight:500}
+
+/* Lower band */
+.lower{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:28px;padding-block:28px 56px}
+.ladder{grid-column:1 / span 4;min-width:0}
+.queue{grid-column:5 / span 8;min-width:0}
+h2{font-family:var(--display);font-weight:800;font-size:28px;line-height:1;text-transform:uppercase;margin:0 0 14px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+h2 .label{font-weight:400}
+.ladder ol{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.ladder li{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--rule)}
+.ladder li .p{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--ink);font-family:var(--display);font-weight:800;font-size:15px}
+.ladder li.mine .p{background:var(--sun);border-color:var(--sun);color:#15171D}
+.ladder li .v{font-family:var(--display);font-weight:800;font-size:22px;font-variant-numeric:tabular-nums}
+.ladder li:first-child .v{font-size:26px}
+.ladder li .t{font-family:var(--mono);font-size:11px;color:var(--ink-2);text-align:right}
+.ladder li.new{animation:slidein .4s ease-out}
+@keyframes slidein{from{background:var(--sun)}}
+
+.queue ol{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.queue li{display:grid;grid-template-columns:86px 72px minmax(0,1fr) auto;gap:18px;align-items:center;padding:14px 0;border-bottom:1px solid var(--rule)}
+.queue .n{font-family:var(--display);font-weight:900;font-size:44px;line-height:.9}
+.queue .thumb{width:72px;height:72px;background:var(--paper-2)}
+.queue .thumb svg{width:100%;height:100%;display:block}
+.queue h3{margin:0;font-size:17px;font-weight:700;line-height:1.25}
+.queue p{margin:2px 0 0;color:var(--ink-2)}
+.queue .est{font-family:var(--mono);font-size:12px;text-align:right;display:grid;gap:6px;justify-items:end}
+.watch{background:transparent;border:1.5px solid var(--ink);padding:6px 10px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
+.watch[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.queue li.now{opacity:.45}
+
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;border-top:2px solid var(--ink);padding-block:20px 40px}
+.rules h4{margin:0 0 4px;font-size:14px;font-weight:700}
+.rules p{margin:0;color:var(--ink-2);max-width:42ch}
+.incr{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums}
+.incr td{padding:3px 0;border-bottom:1px solid var(--rule)}
+.incr td:last-child{text-align:right}
+
+@media (max-width: 960px){
+  .poster,.desk{grid-column:1 / -1}
+  .poster{min-height:420px;margin-bottom:24px}
+  .ladder,.queue{grid-column:1 / -1}
+  .rules{grid-template-columns:1fr}
+}
+@media (max-width: 560px){
+  .me .mono{display:none}
+  .queue li{grid-template-columns:52px minmax(0,1fr) auto;gap:12px}
+  .queue .thumb{display:none}
+  .queue .n{font-size:34px}
+  .poster .caption{grid-template-columns:1fr}
+  .poster .caption .mono{text-align:left}
+  .steps button b{font-size:18px}
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <div class="logo"><span class="mallet" aria-hidden="true"></span>Martelo</div>
+    <div class="session">
+      <span class="live"><i></i>Pregão ao vivo</span>
+      <span class="mono">Sessão 214 · Design brasileiro moderno, 1945–1975</span>
+      <span class="mono" id="room">212 na sala</span>
+    </div>
+    <div class="me">
+      <span class="mono">Sua raquete</span>
+      <span class="paddle" aria-label="Raquete 207">207</span>
+    </div>
+  </div>
+</header>
+
+<nav class="palettes" aria-label="Paleta de cores">
+  <div class="wrap">
+    <span class="label">Paleta</span>
+    <button type="button" class="sw" data-p="cobalto"><i style="--a:#2340E0;--b:#F2C230"></i>Cobalto</button>
+    <button type="button" class="sw" data-p="burle-marx"><i style="--a:#1D6646;--b:#F5A3B5"></i>Burle Marx</button>
+    <button type="button" class="sw" data-p="ameixa"><i style="--a:#5B2C6F;--b:#CDE25B"></i>Ameixa</button>
+    <button type="button" class="sw" data-p="bauhaus"><i style="--a:#C8411A;--b:#A8C5FF"></i>Bauhaus</button>
+    <button type="button" class="sw" data-p="grafite"><i style="--a:#23262E;--b:#FF7A1A"></i>Grafite</button>
+    <button type="button" class="sw" data-p="marinho"><i style="--a:#14284B;--b:#FF8A65"></i>Marinho</button>
+    <button type="button" class="sw" data-p="oliva"><i style="--a:#4F5A1E;--b:#F2D16B"></i>Oliva</button>
+    <button type="button" class="sw" data-p="athos"><i style="--a:#1546A0;--b:#7FC8E8"></i>Athos Bulcão</button>
+    <button type="button" class="sw" data-p="ceu"><i style="--a:#CFE0F0;--b:#FFB547"></i>Céu</button>
+    <div class="modes" role="group" aria-label="Tema">
+      <button type="button" data-m="light" aria-pressed="false">Claro</button>
+      <button type="button" data-m="dark" aria-pressed="false">Escuro</button>
+      <button type="button" data-m="system" aria-pressed="true">Sistema</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <section class="stage" aria-label="Lote em pregão">
+    <figure class="poster" style="margin:0">
+      <svg class="art" id="art" viewBox="0 0 700 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+      <div class="top">
+        <span class="label" id="lotKicker">Lote 47 de 62</span>
+        <span class="label" id="lotEst">Estimativa R$ 35–50 mil</span>
+      </div>
+      <div class="lotno" id="lotNo">47</div>
+      <figcaption class="caption">
+        <div>
+          <h1 id="lotTitle">Poltrona Mole</h1>
+          <p id="lotMaker">Sergio Rodrigues, 1957 · jacarandá e couro</p>
+        </div>
+        <span class="mono" id="lotProv">Proveniência: coleção particular, Rio de Janeiro</span>
+      </figcaption>
+    </figure>
+
+    <div class="desk">
+      <div class="call">
+        <span class="label">Leiloeiro</span>
+        <span class="chip" id="callChip">Recebendo lances</span>
+      </div>
+
+      <div class="price">
+        <div class="label"><span>Lance atual</span><span id="bidCount">14 lances</span></div>
+        <div class="amount" id="amount"><small>R$</small><span id="amountNum">38.500</span></div>
+        <div class="leader out" id="leader"><span class="dot"></span><span id="leaderText">Raquete 118 está à frente</span></div>
+      </div>
+
+      <div class="clock">
+        <div class="row"><span class="label">Fecha em</span><span class="secs" id="secs">30s</span></div>
+        <div class="track" aria-hidden="true">
+          <div class="fill" id="fill" style="width:100%"></div>
+          <div class="tick" style="left:33.33%"></div>
+          <div class="tick" style="left:16.66%"></div>
+        </div>
+        <div class="ticks label" aria-hidden="true">
+          <span style="left:16.66%">Dou-lhe duas</span>
+          <span style="left:33.33%;transform:translateX(-10%)">Dou-lhe uma</span>
+        </div>
+      </div>
+
+      <div class="bid">
+        <div class="steps" role="group" aria-label="Valor do seu lance">
+          <button type="button" id="s1" aria-pressed="true"><span class="label">Mínimo</span><b id="v1">39.000</b></button>
+          <button type="button" id="s2" aria-pressed="false"><span class="label">+2 passos</span><b id="v2">39.500</b></button>
+          <button type="button" id="s3" aria-pressed="false"><span class="label">+5 passos</span><b id="v3">41.000</b></button>
+        </div>
+        <button type="button" class="hold" id="hold">
+          <span class="meter" aria-hidden="true"></span>
+          <span><span class="how">Segure para confirmar</span><br><span class="verb" id="holdVerb">Dar lance</span></span>
+          <span class="verb" id="holdVal">R$ 39.000</span>
+        </button>
+        <dl class="sum">
+          <dt>Seu lance</dt><dd id="sBid">R$ 39.000,00</dd>
+          <dt>Comissão do leiloeiro (5%)</dt><dd id="sFee">R$ 1.950,00</dd>
+          <dt class="total">Você paga se arrematar</dt><dd class="total" id="sTot">R$ 40.950,00</dd>
+        </dl>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lower">
+    <div class="ladder">
+      <h2>Lances <span class="label">mais recente no topo</span></h2>
+      <ol id="ladder"></ol>
+    </div>
+    <div class="queue">
+      <h2>Próximos lotes <span class="label">ordem do pregão</span></h2>
+      <ol id="queue"></ol>
+    </div>
+  </section>
+
+  <section class="rules" aria-label="Regras do pregão">
+    <div>
+      <h4>Lance no último segundo reabre o relógio</h4>
+      <p>Qualquer lance com menos de 30 segundos restantes volta o relógio para 30. Ninguém arremata por ter a conexão mais rápida.</p>
+    </div>
+    <div>
+      <h4>Segurar para confirmar</h4>
+      <p>O botão precisa ficar pressionado por quase um segundo. Um toque acidental não vira um lance de R$ 40 mil.</p>
+    </div>
+    <div>
+      <h4>Tabela de incrementos</h4>
+      <table class="incr" aria-label="Incremento mínimo por faixa de preço">
+        <tr><td>Até R$ 10.000</td><td>R$ 250</td></tr>
+        <tr><td>R$ 10.000 a 50.000</td><td>R$ 500</td></tr>
+        <tr><td>Acima de R$ 50.000</td><td>R$ 1.000</td></tr>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+  const ME = 207;
+  const FEE = 0.05;
+  const SOFT = 30;
+  const others = [118, 64, 331, 92, 15, 240, 177];
+
+  // Simple geometric "posters" for each object. Shapes only, drawn in the panel colors.
+  const ART = {
+    mole: (c) => `
+      <rect x="120" y="250" width="460" height="150" rx="70" fill="${c.ink}" opacity=".9"/>
+      <rect x="150" y="150" width="400" height="140" rx="60" fill="${c.paper}"/>
+      <rect x="110" y="200" width="90" height="190" rx="40" fill="${c.sun}"/>
+      <rect x="500" y="200" width="90" height="190" rx="40" fill="${c.sun}"/>
+      <rect x="140" y="400" width="18" height="70" fill="${c.paper}"/><rect x="540" y="400" width="18" height="70" fill="${c.paper}"/>`,
+    bowl: (c) => `
+      <path d="M150 200 A200 200 0 0 0 550 200 Z" fill="${c.paper}"/>
+      <circle cx="350" cy="200" r="200" fill="none" stroke="${c.sun}" stroke-width="10"/>
+      <ellipse cx="350" cy="420" rx="150" ry="22" fill="none" stroke="${c.ink}" stroke-width="14"/>
+      <rect x="250" y="380" width="12" height="80" fill="${c.ink}"/><rect x="438" y="380" width="12" height="80" fill="${c.ink}"/>`,
+    tres: (c) => `
+      <polygon points="350,90 560,470 140,470" fill="none" stroke="${c.paper}" stroke-width="16"/>
+      <rect x="230" y="250" width="240" height="40" fill="${c.sun}"/>
+      <rect x="280" y="90" width="140" height="160" fill="${c.ink}"/>`,
+    banco: (c) => `
+      <rect x="90" y="230" width="520" height="90" fill="${c.sun}"/>
+      <rect x="140" y="320" width="110" height="140" fill="${c.ink}"/><rect x="450" y="320" width="110" height="140" fill="${c.ink}"/>
+      <circle cx="350" cy="140" r="60" fill="${c.paper}"/>`,
+    paulistano: (c) => `
+      <path d="M170 110 Q350 430 530 110" fill="none" stroke="${c.paper}" stroke-width="18"/>
+      <path d="M150 470 L350 260 L550 470" fill="none" stroke="${c.ink}" stroke-width="18"/>
+      <path d="M200 160 Q350 380 500 160 L500 300 Q350 420 200 300 Z" fill="${c.sun}" opacity=".95"/>`,
+    mesa: (c) => `
+      <rect x="80" y="190" width="540" height="34" fill="${c.paper}"/>
+      <rect x="140" y="224" width="22" height="240" fill="${c.ink}"/><rect x="538" y="224" width="22" height="240" fill="${c.ink}"/>
+      <rect x="160" y="300" width="380" height="18" fill="${c.sun}"/>
+      <rect x="380" y="90" width="120" height="100" fill="${c.ink}"/>`
+  };
+
+  const LOTS = [
+    {n:47, title:"Poltrona Mole", maker:"Sergio Rodrigues, 1957 · jacarandá e couro", prov:"Proveniência: coleção particular, Rio de Janeiro", est:"R$ 35–50 mil", start:38500, art:"mole"},
+    {n:48, title:"Cadeira Bowl", maker:"Lina Bo Bardi, 1951 · aço tubular e tecido", prov:"Proveniência: espólio, São Paulo", est:"R$ 60–90 mil", start:52000, art:"bowl"},
+    {n:49, title:"Cadeira Três Pés", maker:"Joaquim Tenreiro, 1947 · madeiras brasileiras", prov:"Proveniência: galeria, Rio de Janeiro", est:"R$ 80–120 mil", start:71000, art:"tres"},
+    {n:50, title:"Banco escultórico", maker:"José Zanine Caldas, c. 1970 · tronco maciço", prov:"Proveniência: residência, Nova Viçosa", est:"R$ 25–40 mil", start:18000, art:"banco"},
+    {n:51, title:"Poltrona Paulistano", maker:"Paulo Mendes da Rocha, 1957 · aço e couro", prov:"Proveniência: coleção particular, São Paulo", est:"R$ 12–18 mil", start:8750, art:"paulistano"},
+    {n:52, title:"Mesa de jantar Unilabor", maker:"Geraldo de Barros, 1954 · imbuia e ferro", prov:"Proveniência: família do primeiro dono", est:"R$ 20–30 mil", start:14500, art:"mesa"}
+  ];
+
+  const $ = (id) => document.getElementById(id);
+  const fmt = (v) => v.toLocaleString("pt-BR");
+  const money = (v) => "R$ " + v.toLocaleString("pt-BR",{minimumFractionDigits:2, maximumFractionDigits:2});
+  const step = (v) => v < 10000 ? 250 : v < 50000 ? 500 : 1000;
+  function addSteps(v, k){ for(let i=0;i<k;i++) v += step(v); return v; }
+
+  let lotIdx = 0, price, leaderP, bids, secs, choice = 1, closed = false, watched = new Set([49]);
+
+  function cssColors(){
+    const s = getComputedStyle(document.documentElement);
+    return { paper: s.getPropertyValue("--art-paper").trim() || "#ECEDE8",
+             ink: s.getPropertyValue("--art-ink").trim() || "#15171D", sun: s.getPropertyValue("--sun").trim() };
+  }
+
+  function loadLot(i){
+    const L = LOTS[i];
+    lotIdx = i; closed = false; secs = SOFT;
+    price = L.start;
+    leaderP = others[Math.floor(Math.random()*others.length)];
+    bids = [];
+    // seed a short history
+    let v = L.start, t = 8;
+    const seed = [];
+    for(let k=0;k<5;k++){ seed.push({p: k===0 ? leaderP : others[(k*3+i)%others.length], v, t}); v = v - step(v-1); t += 9 + k*4; }
+    bids = seed;
+    $("lotKicker").textContent = `Lote ${L.n} de 62`;
+    $("lotEst").textContent = `Estimativa ${L.est}`;
+    $("lotNo").textContent = L.n;
+    $("lotTitle").textContent = L.title;
+    $("lotMaker").textContent = L.maker;
+    $("lotProv").textContent = L.prov;
+    $("art").innerHTML = ART[L.art](cssColors());
+    $("bidCount").dataset.n = 9 + i*2;
+    render(); renderQueue();
+  }
+
+  function setCall(){
+    const c = $("callChip");
+    c.className = "chip";
+    if(closed){ c.classList.add("sold"); c.textContent = leaderP === ME ? "Vendido! Para você" : `Vendido! Raquete ${leaderP}`; return; }
+    if(secs <= 5){ c.classList.add("twice"); c.textContent = "Dou-lhe duas…"; }
+    else if(secs <= 10){ c.classList.add("once"); c.textContent = "Dou-lhe uma…"; }
+    else c.textContent = "Recebendo lances";
+  }
+
+  function render(){
+    $("amountNum").textContent = fmt(price);
+    $("bidCount").textContent = `${$("bidCount").dataset.n} lances`;
+    const ld = $("leader");
+    ld.className = "leader " + (leaderP === ME ? "you" : "out");
+    $("leaderText").textContent = leaderP === ME ? "Você está à frente" : `Raquete ${leaderP} está à frente`;
+    $("secs").textContent = secs + "s";
+    $("fill").style.width = (secs/SOFT*100) + "%";
+    const vals = [addSteps(price,1), addSteps(price,2), addSteps(price,5)];
+    vals.forEach((v,k)=>{ $("v"+(k+1)).textContent = fmt(v); $("s"+(k+1)).setAttribute("aria-pressed", choice===k+1); });
+    const mine = vals[choice-1];
+    $("holdVal").textContent = "R$ " + fmt(mine);
+    $("sBid").textContent = money(mine);
+    $("sFee").textContent = money(Math.round(mine*FEE*100)/100);
+    $("sTot").textContent = money(mine*(1+FEE));
+    const h = $("hold");
+    h.disabled = closed || leaderP === ME;
+    $("holdVerb").textContent = closed ? "Encerrado" : leaderP === ME ? "Você lidera" : "Dar lance";
+    setCall();
+    renderLadder();
+  }
+
+  function renderLadder(fresh){
+    $("ladder").innerHTML = bids.slice(0,7).map((b,k)=>`
+      <li class="${b.p===ME?'mine':''} ${k===0&&fresh?'new':''}">
+        <span class="p">${b.p}</span>
+        <span class="v">R$ ${fmt(b.v)}</span>
+        <span class="t">${b.p===ME?'você · ':''}${b.t<60? b.t+'s' : Math.floor(b.t/60)+'min'} atrás</span>
+      </li>`).join("");
+  }
+
+  function renderQueue(){
+    const C = cssColors();
+    $("queue").innerHTML = LOTS.map((L,k)=> k < lotIdx ? "" : `
+      <li class="${k===lotIdx?'now':''}">
+        <span class="n">${L.n}</span>
+        <span class="thumb" aria-hidden="true" style="background:var(--cobalt)"><svg viewBox="0 0 700 560" preserveAspectRatio="xMidYMid meet">${ART[L.art](C)}</svg></span>
+        <div><h3>${L.title}</h3><p>${L.maker}</p></div>
+        <div class="est"><span>${L.est}</span>${k===lotIdx ? '<span class="label">Em pregão</span>' :
+          `<button type="button" class="watch" data-n="${L.n}" aria-pressed="${watched.has(L.n)}">${watched.has(L.n)?'Aviso ativo':'Avisar quando abrir'}</button>`}</div>
+      </li>`).join("");
+  }
+
+  $("queue").addEventListener("click", e=>{
+    const b = e.target.closest(".watch"); if(!b) return;
+    const n = +b.dataset.n;
+    watched.has(n) ? watched.delete(n) : watched.add(n);
+    renderQueue();
+    toast(watched.has(n) ? `Vamos avisar quando o lote ${n} abrir.` : `Aviso do lote ${n} removido.`);
+  });
+
+  function placeBid(p, v){
+    price = v; leaderP = p;
+    bids.forEach(b=>b.t+=0);
+    bids.unshift({p, v, t:0});
+    $("bidCount").dataset.n = +$("bidCount").dataset.n + 1;
+    if(secs < SOFT) secs = SOFT;
+    const a = $("amount"); a.classList.remove("flash"); void a.offsetWidth; a.classList.add("flash");
+    render(); renderLadder(true);
+  }
+
+  let toastT;
+  function toast(msg){ $("toast").textContent = msg; clearTimeout(toastT); toastT = setTimeout(()=>$("toast").textContent="", 4000); }
+
+  [1,2,3].forEach(k=> $("s"+k).addEventListener("click", ()=>{ choice = k; render(); }));
+
+  // Hold-to-confirm
+  const hold = $("hold"); let hT = null;
+  function startHold(){
+    if(hold.disabled || hT) return;
+    hold.classList.add("charging");
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    hT = setTimeout(()=>{
+      hT = null; hold.classList.remove("charging");
+      const v = [addSteps(price,1), addSteps(price,2), addSteps(price,5)][choice-1];
+      placeBid(ME, v);
+      toast(`Lance de R$ ${fmt(v)} registrado. O relógio voltou para 30s.`);
+      choice = 1; render();
+    }, reduced ? 400 : 900);
+  }
+  function cancelHold(){
+    if(!hT) return;
+    clearTimeout(hT); hT = null; hold.classList.remove("charging");
+    toast("Lance cancelado. Segure o botão até a barra encher.");
+  }
+  hold.addEventListener("pointerdown", e=>{ e.preventDefault(); startHold(); });
+  ["pointerup","pointerleave","pointercancel"].forEach(ev=>hold.addEventListener(ev, cancelHold));
+  hold.addEventListener("keydown", e=>{ if((e.key===" "||e.key==="Enter") && !e.repeat){ e.preventDefault(); startHold(); }});
+  hold.addEventListener("keyup", e=>{ if(e.key===" "||e.key==="Enter") cancelHold(); });
+
+  // Room simulation
+  let room = 212;
+  setInterval(()=>{
+    if(closed) return;
+    secs = Math.max(0, secs-1);
+    bids.forEach(b=>b.t++);
+    // rival bidders: more active near the end, less after you lead
+    const chance = secs <= 6 ? 0.28 : 0.09;
+    if(secs > 1 && Math.random() < chance){
+      let p; do { p = others[Math.floor(Math.random()*others.length)]; } while(p === leaderP);
+      placeBid(p, addSteps(price, Math.random()<.8?1:2));
+      if(bids[1] && bids[1].p === ME) toast(`Raquete ${p} cobriu seu lance.`);
+    }
+    if(secs === 0){
+      closed = true; render();
+      toast(leaderP === ME ? `Arrematado por R$ ${fmt(price)}. Total com comissão: ${money(price*(1+FEE))}.` : `Lote ${LOTS[lotIdx].n} vendido para a raquete ${leaderP}.`);
+      setTimeout(()=> loadLot((lotIdx+1) % LOTS.length), 4500);
+      return;
+    }
+    if(Math.random()<.3){ room += Math.random()<.55 ? 1 : -1; $("room").textContent = room + " na sala"; }
+    render();
+  }, 1000);
+
+  const mq = matchMedia("(prefers-color-scheme: dark)");
+  mq.addEventListener && mq.addEventListener("change", ()=>{ $("art").innerHTML = ART[LOTS[lotIdx].art](cssColors()); });
+
+  const PALS = ["cobalto","burle-marx","ameixa","bauhaus","grafite","marinho","oliva","athos","ceu"];
+  function applyPalette(){
+    const h = location.hash.slice(1);
+    const p = PALS.includes(h) ? h : "burle-marx";
+    if(p === "cobalto") document.documentElement.removeAttribute("data-palette");
+    else document.documentElement.setAttribute("data-palette", p);
+    document.querySelectorAll(".sw").forEach(b=>b.setAttribute("aria-current", b.dataset.p === p));
+    $("art").innerHTML = ART[LOTS[lotIdx].art](cssColors());
+    renderQueue();
+  }
+  document.querySelectorAll(".sw").forEach(b=>b.addEventListener("click", ()=>{ location.hash = b.dataset.p; applyPalette(); }));
+  window.addEventListener("hashchange", applyPalette);
+
+  function applyMode(m){
+    if(m === "system") document.documentElement.removeAttribute("data-theme");
+    else document.documentElement.setAttribute("data-theme", m);
+    document.querySelectorAll(".modes button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.m === m));
+    try{ localStorage.setItem("martelo-mode", m); }catch(e){}
+    $("art").innerHTML = ART[LOTS[lotIdx].art](cssColors());
+    renderQueue();
+  }
+  document.querySelectorAll(".modes button").forEach(b=>b.addEventListener("click", ()=>applyMode(b.dataset.m)));
+
+  loadLot(0);
+  applyPalette();
+  let savedMode = "dark";
+  try{ savedMode = localStorage.getItem("martelo-mode") || "dark"; }catch(e){}
+  applyMode(savedMode);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+@layer theme, base, components, utilities;
+
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities) important;
+
+@source '../';
+
+@theme {
+        /* Detalhes de quando usar cada uma em fonts.css */
+        --font-sans: 'Schibsted Grotesk', 'Helvetica Neue', Arial, sans-serif;  /* padrão: textos, botões, menus */
+        --font-display: 'Big Shoulders Display', 'Arial Narrow', sans-serif;    /* font-display: preço, números, títulos */
+        --font-mono: 'IBM Plex Mono', Consolas, monospace;                      /* font-mono: rótulos, horários, valores */
+
+        --color-primary: var(--q-primary);
+        --color-secondary: var(--q-secondary);
+        --color-accent: var(--q-accent);
+        --color-positive: var(--q-positive);
+        --color-negative: var(--q-negative);
+        --color-info: var(--q-info);
+        --color-warning: var(--q-warning);
+}
+
+@custom-variant dark (&:where(.body--dark, .body--dark *));

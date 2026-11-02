@@ -1,0 +1,52 @@
+html, body, #q-app {
+        min-height: 100%;
+}
+button, input, optgroup, select, textarea {
+        font-family: inherit;
+}
+
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 1000px var(--ecco-autofill-bg, #fff) inset !important;
+        box-shadow: 0 0 0 1000px var(--ecco-autofill-bg, #fff) inset !important;
+        -webkit-text-fill-color: var(--ecco-autofill-text, rgba(0, 0, 0, 0.87)) !important;
+        caret-color: var(--ecco-autofill-text, rgba(0, 0, 0, 0.87));
+        transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill::first-line {
+        font-family: $typography-font-family !important;
+        font-size: 12px !important;
+}
+
+.body--dark {
+        --ecco-autofill-bg: #{$dark-page};
+        --ecco-autofill-text: #fff;
+}
+
+// Sem cantos arredondados em inputs/selects (q-input, q-select...) e botões circulares.
+// Mesma especificidade das regras do Quasar; vence por vir depois no CSS.
+.q-field--filled, .q-field--outlined, .q-field--standout {
+        &, &.q-field--rounded {
+                .q-field__control {
+                        border-radius: 0;
+                }
+        }
+}
+
+.q-btn--round {
+        border-radius: 0;
+}
+
+// O .q-notification define 14px e vem depois do .text-caption no CSS do Quasar
+.q-notification.text-caption {
+        font-size: 0.75rem;
+
+        .q-notification__icon {
+                font-size: 18px;
+        }
+
+        .q-notification__icon--additional {
+                margin-right: 10px;
+        }
+}

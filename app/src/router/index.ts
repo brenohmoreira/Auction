@@ -17,12 +17,13 @@ export default defineRouter(function ({ store }) {
                 
                 await autenticacao.carregaSessao();
 
-                const publica = to.matched.some((r) => r.meta.publica)
+                const visitante = to.matched.some((r) => r.meta.visitante)
+                const publica = visitante || to.matched.some((r) => r.meta.publica)
 
                 if (!publica && !autenticacao.autenticado)
                         return { name: 'conectar', query: { redirect: to.fullPath } }
 
-                if (publica && autenticacao.autenticado)
+                if (visitante && autenticacao.autenticado)
                         return { name: 'home' }
         })
 

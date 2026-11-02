@@ -4,6 +4,7 @@ const routes: RouteRecordRaw[] = [
         {
                 path: '/',
                 component: () => import('@/layouts/MainLayout.vue'),
+                meta: { publica: true },
                 children: [
                         {
                                 path: '',
@@ -16,7 +17,7 @@ const routes: RouteRecordRaw[] = [
         {
                 path: '/autenticacao',
                 component: () => import('@/layouts/AuthLayout.vue'),
-                meta: { publica: true },
+                meta: { visitante: true },
                 children: [
                         {
                                 path: 'conectar',

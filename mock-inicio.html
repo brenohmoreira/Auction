@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ecco · Início</title>
+<style>
+/* Fontes do próprio app (app/src/assets/fonts) */
+@font-face{font-family:"Big Shoulders Display";src:url("app/src/assets/fonts/big-shoulders-display/BigShouldersDisplay-Variavel.ttf") format("truetype");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Schibsted Grotesk";src:url("app/src/assets/fonts/schibsted-grotesk/SchibstedGrotesk-Variavel.ttf") format("truetype");font-weight:400 900;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("app/src/assets/fonts/ibm-plex-mono/IBMPlexMono-Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("app/src/assets/fonts/ibm-plex-mono/IBMPlexMono-Medium.ttf") format("truetype");font-weight:500;font-display:swap}
+
+/*
+ * Cores
+ *   --fundo    #0F1116  fundo das telas de login/cadastro
+ *   --primaria #348865  $primary do Quasar (ações, marca, "à frente")
+ *   --perigo   #A31C18  $secondary do Quasar (ao vivo, superado). Em texto usa --perigo-texto, mais claro, para ter contraste
+ *   --destaque #F5A3B5  rosa da paleta Burle Marx do mock do pregão (sua raquete, foco)
+ */
+:root{
+  --fundo:#0F1116; --fundo-2:#171A21; --fundo-3:#1E222B;
+  --tinta:#E9EAE4; --tinta-2:#9EA2AB; --regua:#2A2E37;
+  --primaria:#348865; --primaria-clara:#4CAF82; --primaria-tinta:#F3F4EF;
+  --perigo:#A31C18; --perigo-texto:#F0705C;
+  --destaque:#F5A3B5;
+  --display:"Big Shoulders Display","Arial Narrow",sans-serif;
+  --texto:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",Consolas,monospace;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--fundo);color:var(--tinta);font-family:var(--texto);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer;border-radius:0}
+:focus-visible{outline:3px solid var(--destaque);outline-offset:2px}
+.wrap{max-width:1320px;margin:0 auto;padding-inline:16px}
+.rotulo{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--tinta-2)}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.02em}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- Barra superior ---------- */
+header.barra{border-bottom:2px solid var(--tinta)}
+header.barra .wrap{display:flex;align-items:center;gap:28px;padding-block:14px;flex-wrap:wrap}
+.logo{font-family:var(--display);font-weight:900;font-size:32px;line-height:1;text-transform:uppercase;color:var(--primaria-clara);letter-spacing:.02em}
+nav.menu{display:flex;gap:4px;flex-wrap:wrap}
+nav.menu a{font-weight:500;padding:6px 12px;color:var(--tinta-2);border-bottom:2px solid transparent}
+nav.menu a:hover{color:var(--tinta)}
+nav.menu a[aria-current="page"]{color:var(--tinta);border-bottom-color:var(--primaria-clara)}
+.eu{margin-left:auto;display:flex;align-items:center;gap:12px}
+.eu .avatar{display:inline-grid;place-items:center;width:38px;height:38px;background:var(--primaria);color:var(--primaria-tinta);font-family:var(--display);font-weight:900;font-size:17px}
+.eu .quem{display:grid;line-height:1.2}
+.eu .quem b{font-weight:600;font-size:14px}
+.eu .quem span{font-family:var(--mono);font-size:11px;color:var(--tinta-2)}
+.btn-linha{background:transparent;border:1.5px solid var(--regua);padding:7px 12px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
+.btn-linha:hover{border-color:var(--tinta)}
+
+/* ---------- Saudação ---------- */
+.saudacao{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;padding-block:28px 18px}
+.saudacao h1{margin:0;font-family:var(--display);font-weight:800;font-size:clamp(34px,4.4vw,56px);line-height:.95;text-transform:uppercase}
+.saudacao p{margin:6px 0 0;color:var(--tinta-2)}
+.resumo{display:flex;gap:28px;flex-wrap:wrap}
+.resumo div{display:grid;gap:2px}
+.resumo b{font-family:var(--display);font-weight:900;font-size:34px;line-height:1}
+.resumo .ok b{color:var(--primaria-clara)}
+.resumo .ruim b{color:var(--perigo-texto)}
+
+/* ---------- Ao vivo ---------- */
+.aovivo{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 28px;border-top:2px solid var(--tinta);padding-top:22px}
+.cartaz{grid-column:1 / span 7;background:var(--primaria);color:var(--primaria-tinta);position:relative;min-height:440px;overflow:hidden;display:flex;flex-direction:column}
+.cartaz svg{position:absolute;inset:0;width:100%;height:100%}
+.cartaz .topo{position:relative;display:flex;justify-content:space-between;gap:16px;padding:20px 22px}
+.cartaz .topo .rotulo{color:var(--primaria-tinta);opacity:.85}
+.aovivo-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.1em;font-weight:500;background:var(--perigo);color:#fff;padding:5px 10px}
+.aovivo-tag i{width:8px;height:8px;border-radius:50%;background:#fff;animation:pulsa 1.6s infinite}
+@keyframes pulsa{50%{opacity:.25}}
+.cartaz .lote{position:relative;margin-top:auto;padding:0 18px 4px;font-family:var(--display);font-weight:900;font-size:clamp(110px,16vw,220px);line-height:.78;letter-spacing:-.02em;color:transparent;-webkit-text-stroke:2px var(--primaria-tinta)}
+.cartaz .legenda{position:relative;background:var(--tinta);color:var(--fundo);padding:14px 22px;display:grid;grid-template-columns:1fr auto;gap:4px 24px;align-items:end}
+.cartaz .legenda h2{margin:0;font-family:var(--display);font-weight:800;font-size:clamp(26px,3vw,38px);line-height:1;text-transform:uppercase}
+.cartaz .legenda p{margin:0;opacity:.75}
+.cartaz .legenda .mono{opacity:.75;text-align:right}
+
+.mesa{grid-column:8 / span 5;display:flex;flex-direction:column;gap:20px;min-width:0}
+.mesa .sessao{border-bottom:1px solid var(--regua);padding-bottom:12px;display:grid;gap:4px}
+.mesa .sessao h3{margin:0;font-size:18px;font-weight:700;line-height:1.25}
+.preco .rotulo{display:flex;justify-content:space-between}
+.valor{font-family:var(--display);font-weight:900;font-size:clamp(70px,8vw,124px);line-height:.85;font-variant-numeric:tabular-nums;display:flex;align-items:flex-start;gap:6px;margin-top:6px}
+.valor small{font-size:.28em;font-weight:800;margin-top:.35em}
+.lider{display:flex;align-items:center;gap:10px;margin-top:10px;font-weight:500;color:var(--tinta-2)}
+.lider .ponto{width:10px;height:10px;border-radius:50%;background:var(--tinta-2)}
+.relogio{display:grid;gap:8px}
+.relogio .linha{display:flex;justify-content:space-between;align-items:baseline}
+.segundos{font-family:var(--display);font-weight:800;font-size:32px;line-height:1;font-variant-numeric:tabular-nums}
+.trilho{position:relative;height:12px;background:var(--fundo-3);border:1.5px solid var(--tinta)}
+.trilho .cheio{position:absolute;inset:0 auto 0 0;background:var(--tinta);transition:width 1s linear}
+.btn-entrar{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--primaria);color:var(--primaria-tinta);border:0;padding:18px 22px;text-align:left}
+.btn-entrar:hover{background:#2E7A5A}
+.btn-entrar .verbo{font-family:var(--display);font-weight:900;font-size:28px;line-height:1;text-transform:uppercase}
+.btn-entrar .mono{opacity:.85;text-transform:uppercase;letter-spacing:.1em;font-size:11px}
+.placa-info{display:flex;align-items:center;gap:12px;color:var(--tinta-2);font-size:14px}
+.raquete{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--destaque);color:#15171D;font-family:var(--display);font-weight:900;font-size:17px;flex:none}
+
+/* ---------- Faixa de baixo ---------- */
+h2.secao{font-family:var(--display);font-weight:800;font-size:28px;line-height:1;text-transform:uppercase;margin:0 0 14px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+h2.secao a{font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:.12em;color:var(--primaria-clara)}
+h2.secao a:hover{text-decoration:underline}
+.faixa{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:28px;padding-block:40px 8px}
+.meus{grid-column:1 / span 5;min-width:0}
+.fechando{grid-column:6 / span 7;min-width:0}
+ol.lista{list-style:none;margin:0;padding:0;border-top:2px solid var(--tinta)}
+
+.meus li{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--regua)}
+.meus .n{font-family:var(--display);font-weight:900;font-size:34px;line-height:.9}
+.meus h4{margin:0;font-size:15px;font-weight:700;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meus p{margin:2px 0 0;font-family:var(--mono);font-size:12px;color:var(--tinta-2)}
+.meus .dir{display:grid;gap:6px;justify-items:end}
+.meus .v{font-family:var(--display);font-weight:800;font-size:22px;line-height:1;font-variant-numeric:tabular-nums}
+.chip{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;padding:4px 8px;font-weight:500;white-space:nowrap;border:1.5px solid var(--regua)}
+.chip.frente{background:var(--primaria);border-color:var(--primaria);color:var(--primaria-tinta)}
+.chip.superado{background:var(--perigo);border-color:var(--perigo);color:#fff}
+.chip.arrematado{background:var(--tinta);border-color:var(--tinta);color:var(--fundo)}
+
+.fechando li{display:grid;grid-template-columns:72px 64px minmax(0,1fr) auto;gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid var(--regua)}
+.fechando .n{font-family:var(--display);font-weight:900;font-size:40px;line-height:.9}
+.fechando .mini{width:64px;height:64px;background:var(--primaria)}
+.fechando .mini svg{width:100%;height:100%;display:block}
+.fechando h4{margin:0;font-size:16px;font-weight:700;line-height:1.25}
+.fechando p{margin:2px 0 0;color:var(--tinta-2);font-size:14px}
+.fechando .dir{display:grid;gap:4px;justify-items:end;text-align:right}
+.fechando .v{font-family:var(--display);font-weight:800;font-size:24px;line-height:1;font-variant-numeric:tabular-nums}
+.fechando .t{font-family:var(--mono);font-size:12px;color:var(--tinta-2)}
+.fechando .t.urgente{color:var(--perigo-texto);font-weight:500}
+
+/* ---------- Próximos leilões ---------- */
+.proximos{padding-block:40px 8px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;border-top:2px solid var(--tinta);padding-top:20px}
+.card{background:var(--fundo-2);border:1px solid var(--regua);display:flex;flex-direction:column;min-width:0}
+.card .capa{position:relative;height:150px;background:var(--fundo-3);overflow:hidden;display:flex;align-items:flex-end;justify-content:space-between;padding:14px 16px}
+.card .capa svg{position:absolute;inset:0;width:100%;height:100%}
+.card .data{position:relative;display:grid;line-height:1;background:var(--fundo);padding:8px 10px;text-align:center}
+.card .data b{font-family:var(--display);font-weight:900;font-size:36px}
+.card .data span{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--tinta-2)}
+.card .qtd{position:relative;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;background:var(--fundo);padding:5px 8px}
+.card .corpo{padding:16px;display:grid;gap:6px;flex:1}
+.card h3{margin:0;font-family:var(--display);font-weight:800;font-size:24px;line-height:1.05;text-transform:uppercase}
+.card p{margin:0;color:var(--tinta-2);font-size:14px}
+.card .meta{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:12px;color:var(--tinta-2);border-top:1px solid var(--regua);padding-top:10px;margin-top:6px}
+.card .acoes{display:grid;grid-template-columns:1fr auto;border-top:1px solid var(--regua)}
+.card .acoes button{background:transparent;border:0;padding:12px 16px;text-align:left;font-weight:600}
+.card .acoes button:hover{background:var(--fundo-3)}
+.card .acoes .avisar{border-left:1px solid var(--regua);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:500}
+.card .acoes .avisar[aria-pressed="true"]{background:var(--tinta);color:var(--fundo)}
+
+/* ---------- Como funciona ---------- */
+.passos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;border-top:2px solid var(--tinta);margin-top:48px;padding-block:20px 56px}
+.passos .k{font-family:var(--display);font-weight:900;font-size:44px;line-height:1;color:var(--primaria-clara)}
+.passos h4{margin:6px 0 4px;font-size:15px;font-weight:700}
+.passos p{margin:0;color:var(--tinta-2);max-width:42ch;font-size:14px}
+
+/* ---------- Responsivo ---------- */
+@media (max-width:960px){
+  .cartaz,.mesa{grid-column:1 / -1}
+  .cartaz{min-height:340px;margin-bottom:24px}
+  .meus,.fechando{grid-column:1 / -1}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:620px){
+  .eu .quem{display:none}
+  nav.menu{order:3;width:100%;overflow-x:auto;flex-wrap:nowrap}
+  .cards,.passos{grid-template-columns:1fr}
+  .fechando li{grid-template-columns:48px minmax(0,1fr) auto;gap:12px}
+  .fechando .mini{display:none}
+  .fechando .n{font-size:30px}
+  .cartaz .legenda{grid-template-columns:1fr}
+  .cartaz .legenda .mono{text-align:left}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="barra">
+  <div class="wrap">
+    <a href="#" class="logo" aria-label="Ecco, início">Ecco</a>
+    <nav class="menu" aria-label="Principal">
+      <a href="#" aria-current="page">Início</a>
+      <a href="#">Leilões</a>
+      <a href="#">Meus lances</a>
+      <a href="#">Arremates</a>
+      <a href="#">Criar leilão</a>
+    </nav>
+    <div class="eu">
+      <span class="avatar" aria-hidden="true">BR</span>
+      <span class="quem"><b>Breno</b><span>breno@email.com</span></span>
+      <button type="button" class="btn-linha">Sair</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- Saudação + resumo do usuário -->
+  <section class="saudacao">
+    <div>
+      <h1>Boa tarde, Breno</h1>
+      <p>Um leilão ao vivo agora e 3 abrindo esta semana.</p>
+    </div>
+    <div class="resumo">
+      <div class="ok"><span class="rotulo">À frente</span><b class="num">2</b></div>
+      <div class="ruim"><span class="rotulo">Superado</span><b class="num">1</b></div>
+      <div><span class="rotulo">Arrematados</span><b class="num">4</b></div>
+    </div>
+  </section>
+
+  <!-- Destaque: leilão ao vivo -->
+  <section class="aovivo" aria-label="Leilão ao vivo">
+    <figure class="cartaz" style="margin:0">
+      <svg viewBox="0 0 700 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect x="120" y="190" width="460" height="130" fill="#15171D" opacity=".9"/>
+        <rect x="150" y="100" width="400" height="120" fill="#ECEDE8"/>
+        <rect x="110" y="150" width="90" height="170" fill="#F5A3B5"/>
+        <rect x="500" y="150" width="90" height="170" fill="#F5A3B5"/>
+        <rect x="140" y="320" width="18" height="60" fill="#ECEDE8"/><rect x="540" y="320" width="18" height="60" fill="#ECEDE8"/>
+      </svg>
+      <div class="topo">
+        <span class="aovivo-tag"><i></i>Ao vivo</span>
+        <span class="rotulo">Lote 47 de 62</span>
+      </div>
+      <div class="lote">47</div>
+      <figcaption class="legenda">
+        <div>
+          <h2>Poltrona Mole</h2>
+          <p>Sergio Rodrigues, 1957 · jacarandá e couro</p>
+        </div>
+        <span class="mono">Estimativa R$ 35–50 mil</span>
+      </figcaption>
+    </figure>
+
+    <div class="mesa">
+      <div class="sessao">
+        <span class="rotulo">Leilão 214 · 212 na sala</span>
+        <h3>Design brasileiro moderno, 1945–1975</h3>
+      </div>
+
+      <div class="preco">
+        <div class="rotulo"><span>Lance atual</span><span>14 lances</span></div>
+        <div class="valor"><small>R$</small><span id="valor">38.500</span></div>
+        <div class="lider"><span class="ponto"></span><span>Raquete 118 está à frente</span></div>
+      </div>
+
+      <div class="relogio">
+        <div class="linha"><span class="rotulo">Lote fecha em</span><span class="segundos" id="seg">24s</span></div>
+        <div class="trilho" aria-hidden="true"><div class="cheio" id="cheio" style="width:80%"></div></div>
+      </div>
+
+      <button type="button" class="btn-entrar">
+        <span><span class="mono">Você está habilitado</span><br><span class="verbo">Entrar no pregão</span></span>
+        <span class="verbo" aria-hidden="true">→</span>
+      </button>
+
+      <div class="placa-info">
+        <span class="raquete" aria-label="Raquete 207">207</span>
+        <span>Sua raquete neste leilão. Ela identifica você nos lances, sem mostrar seu nome.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seus lances + Encerrando em breve -->
+  <section class="faixa">
+    <div class="meus">
+      <h2 class="secao">Seus lances <a href="#">Ver todos</a></h2>
+      <ol class="lista">
+        <li>
+          <span class="n">12</span>
+          <div><h4>Luminária Pendente Ovo</h4><p>Leilão 211 · fecha em 2h 14min</p></div>
+          <div class="dir"><span class="v">R$ 4.250</span><span class="chip frente">À frente</span></div>
+        </li>
+        <li>
+          <span class="n">33</span>
+          <div><h4>Aparador em jacarandá</h4><p>Leilão 211 · fecha em 2h 51min</p></div>
+          <div class="dir"><span class="v">R$ 9.000</span><span class="chip superado">Superado</span></div>
+        </li>
+        <li>
+          <span class="n">08</span>
+          <div><h4>Gravura de Lívio Abramo</h4><p>Leilão 213 · fecha amanhã, 15h</p></div>
+          <div class="dir"><span class="v">R$ 1.800</span><span class="chip frente">À frente</span></div>
+        </li>
+        <li>
+          <span class="n">51</span>
+          <div><h4>Poltrona Paulistano</h4><p>Leilão 209 · encerrado 28/10</p></div>
+          <div class="dir"><span class="v">R$ 13.500</span><span class="chip arrematado">Arrematado</span></div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="fechando">
+      <h2 class="secao">Encerrando em breve <a href="#">Ver lotes</a></h2>
+      <ol class="lista" id="fechando"></ol>
+    </div>
+  </section>
+
+  <!-- Próximos leilões -->
+  <section class="proximos">
+    <h2 class="secao">Próximos leilões <a href="#">Agenda completa</a></h2>
+    <div class="cards">
+      <article class="card">
+        <div class="capa" style="background:#1D6646">
+          <svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="300" cy="40" r="90" fill="none" stroke="#F5A3B5" stroke-width="8"/><rect x="40" y="80" width="200" height="22" fill="#ECEDE8"/></svg>
+          <span class="data"><b>06</b><span>Nov</span></span>
+          <span class="qtd">48 lotes</span>
+        </div>
+        <div class="corpo">
+          <h3>Arte popular do Nordeste</h3>
+          <p>Xilogravuras, cerâmica do Vale do Jequitinhonha e esculturas em madeira.</p>
+          <div class="meta"><span>Qui · 14h00</span><span>Lance inicial a partir de R$ 150</span></div>
+        </div>
+        <div class="acoes"><button type="button">Ver lotes</button><button type="button" class="avisar" aria-pressed="false">Avisar</button></div>
+      </article>
+
+      <article class="card">
+        <div class="capa" style="background:#23262E">
+          <svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><polygon points="200,10 330,150 70,150" fill="none" stroke="#ECEDE8" stroke-width="8"/><rect x="160" y="70" width="80" height="18" fill="#348865"/></svg>
+          <span class="data"><b>09</b><span>Nov</span></span>
+          <span class="qtd">120 lotes</span>
+        </div>
+        <div class="corpo">
+          <h3>Relógios e canetas</h3>
+          <p>Peças de coleção, com laudo de autenticidade em todos os lotes.</p>
+          <div class="meta"><span>Dom · 10h00</span><span>Lance inicial a partir de R$ 400</span></div>
+        </div>
+        <div class="acoes"><button type="button">Ver lotes</button><button type="button" class="avisar" aria-pressed="true">Aviso ativo</button></div>
+      </article>
+
+      <article class="card">
+        <div class="capa" style="background:#A31C18">
+          <svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect x="60" y="30" width="110" height="110" fill="#15171D"/><circle cx="290" cy="80" r="50" fill="#F5A3B5"/></svg>
+          <span class="data"><b>12</b><span>Nov</span></span>
+          <span class="qtd">35 lotes</span>
+        </div>
+        <div class="corpo">
+          <h3>Modernismo em papel</h3>
+          <p>Desenhos, cartazes e primeiras edições, de 1922 a 1960.</p>
+          <div class="meta"><span>Qua · 19h30</span><span>Lance inicial a partir de R$ 250</span></div>
+        </div>
+        <div class="acoes"><button type="button">Ver lotes</button><button type="button" class="avisar" aria-pressed="false">Avisar</button></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Como funciona -->
+  <section class="passos" aria-label="Como funciona">
+    <div>
+      <span class="k">01</span>
+      <h4>Habilite-se no leilão</h4>
+      <p>Você recebe uma raquete com número próprio. É com ela que seus lances aparecem para a sala.</p>
+    </div>
+    <div>
+      <span class="k">02</span>
+      <h4>Dê lances no pregão</h4>
+      <p>Cada lance precisa superar o atual pelo incremento mínimo. Lance nos últimos segundos prorroga o lote.</p>
+    </div>
+    <div>
+      <span class="k">03</span>
+      <h4>Arremate e pague</h4>
+      <p>Quem tiver o maior lance quando o relógio zerar leva o lote. A comissão do leiloeiro é de 5%.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+  const $ = (id) => document.getElementById(id);
+  const fmt = (v) => v.toLocaleString("pt-BR");
+
+  // Miniaturas geométricas, no mesmo estilo do mock do pregão
+  const ARTE = {
+    ovo:   `<circle cx="350" cy="230" r="170" fill="#ECEDE8"/><rect x="340" y="0" width="20" height="70" fill="#15171D"/>`,
+    banco: `<rect x="90" y="230" width="520" height="90" fill="#F5A3B5"/><rect x="140" y="320" width="110" height="140" fill="#15171D"/><rect x="450" y="320" width="110" height="140" fill="#15171D"/>`,
+    mesa:  `<rect x="80" y="190" width="540" height="40" fill="#ECEDE8"/><rect x="140" y="230" width="26" height="240" fill="#15171D"/><rect x="534" y="230" width="26" height="240" fill="#15171D"/>`,
+    tres:  `<polygon points="350,90 560,470 140,470" fill="none" stroke="#ECEDE8" stroke-width="22"/><rect x="230" y="250" width="240" height="44" fill="#F5A3B5"/>`
+  };
+
+  const FECHANDO = [
+    {n:12, titulo:"Luminária Pendente Ovo", sub:"Leilão 211 · Iluminação", valor:4250, seg:3*60+12, arte:"ovo"},
+    {n:19, titulo:"Banco escultórico", sub:"Leilão 211 · José Zanine Caldas", valor:18000, seg:9*60+40, arte:"banco"},
+    {n:33, titulo:"Aparador em jacarandá", sub:"Leilão 211 · Joaquim Tenreiro", valor:9000, seg:21*60+5, arte:"mesa"},
+    {n:40, titulo:"Cadeira Três Pés", sub:"Leilão 211 · Joaquim Tenreiro", valor:71000, seg:47*60, arte:"tres"}
+  ];
+
+  function tempo(s){
+    if(s <= 0) return "Encerrado";
+    const m = Math.floor(s/60), r = s%60;
+    return m > 0 ? `${m}min ${String(r).padStart(2,"0")}s` : `${r}s`;
+  }
+
+  function renderFechando(){
+    $("fechando").innerHTML = FECHANDO.map(L => `
+      <li>
+        <span class="n">${L.n}</span>
+        <span class="mini" aria-hidden="true"><svg viewBox="0 0 700 560" preserveAspectRatio="xMidYMid meet">${ARTE[L.arte]}</svg></span>
+        <div><h4>${L.titulo}</h4><p>${L.sub}</p></div>
+        <div class="dir">
+          <span class="rotulo">Lance atual</span>
+          <span class="v">R$ ${fmt(L.valor)}</span>
+          <span class="t ${L.seg < 5*60 ? "urgente" : ""}">Fecha em ${tempo(L.seg)}</span>
+        </div>
+      </li>`).join("");
+  }
+
+  // Simulação simples: relógio do lote ao vivo e contagem dos lotes encerrando
+  const TOTAL = 30;
+  let seg = 24, valor = 38500;
+  setInterval(() => {
+    seg = seg <= 1 ? TOTAL : seg - 1;
+    if(Math.random() < .12){ valor += 500; seg = TOTAL; $("valor").textContent = fmt(valor); }
+    $("seg").textContent = seg + "s";
+    $("cheio").style.width = (seg / TOTAL * 100) + "%";
+
+    FECHANDO.forEach(L => L.seg = Math.max(0, L.seg - 1));
+    renderFechando();
+  }, 1000);
+
+  // Botões "Avisar"
+  document.querySelectorAll(".avisar").forEach(b => b.addEventListener("click", () => {
+    const on = b.getAttribute("aria-pressed") !== "true";
+    b.setAttribute("aria-pressed", on);
+    b.textContent = on ? "Aviso ativo" : "Avisar";
+  }));
+
+  renderFechando();
+})();
+</script>
+</body>
+</html>
